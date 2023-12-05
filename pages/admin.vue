@@ -1,5 +1,4 @@
 <script setup lang="ts">
-//definePageMeta({ middleware: 'auth' })
 const { status, user, signOut, signIn } = useAuth()
 useHead({
   title: 'Admin Page',
@@ -37,7 +36,7 @@ useHead({
         <button 
           v-if="status === 'authenticated'" 
           class="flex items-center justify-center space-x-2 bg-red-500 text-white rounded-lg py-2 px-3 text-lg" 
-          @click="signOut({ callbackUrl: '/' })"
+          @click="signOut({ callbackUrl: '/admin' })"
         >
           <span>Logout</span>
         </button>
