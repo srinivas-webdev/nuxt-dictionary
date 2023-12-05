@@ -4,11 +4,22 @@ import type { AuthConfig } from "@auth/core/types"
 import { NuxtAuthHandler } from "#auth"
 import type { User } from '@auth/core/types';
 
-// The #auth virtual import comes from this module. You can use it on the client
-// and server side, however not every export is universal. For example do not
-// use sign-in and sign-out on the server side.
-
 const runtimeConfig = useRuntimeConfig()
+
+import { createClient } from '@supabase/supabase-js'
+
+async function getUser(username: string, password: string) {
+  const supabaseClient = createClient(runtimeConfig.supaBaseUrl, runtimeConfig.supaBaseKey)
+  const { data } = await supabaseClient
+  .from('user')
+  .select("id, name, email")
+  .eq('name', username)
+  .eq('secret', password)
+  .limit(1)
+  .single()
+  
+  return data
+}
 
 // Refer to Auth.js docs for more details
 export const authOptions: AuthConfig = {
@@ -39,16 +50,14 @@ export const authOptions: AuthConfig = {
         if (!credentials.username || !credentials.password) {
           return null;
         }
-        //const userDetails = await getUser(credentials.username as string , credentials.password as string, env.get("SUPABASE_URL") as string, env.get("SUPABASE_KEY") as string)
-        const userDetails = {
-          id: "1",
-          name: "Dhruthi"
-        }
+        const userDetails = await getUser(credentials.username as string , credentials.password as string)
+        if (!userDetails) return null
         const user: User = {
           id: userDetails?.id,
           name: userDetails?.name,
+          email: userDetails?.email
         };
-
+        
         return user;
       },
     }),
@@ -56,5 +65,3 @@ export const authOptions: AuthConfig = {
 }
 
 export default NuxtAuthHandler(authOptions, runtimeConfig)
-// If you don't want to pass the full runtime config,
-//  you can pass something like this: { public: { authJs: { baseUrl: "" } } }

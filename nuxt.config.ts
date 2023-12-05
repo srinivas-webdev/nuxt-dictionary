@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     supaBaseUrl: process.env.SUPABASE_URL,
     supaBaseKey: process.env.SUPABASE_KEY,
+    adminEmail: process.env.ADMIN_EMAIL,
     authJs: {
       secret: process.env.NUXT_NEXTAUTH_SECRET // You can generate one with `openssl rand -base64 32`
     },
@@ -22,7 +23,6 @@ export default defineNuxtConfig({
     public: {
       authJs: {
         baseUrl: process.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
-        verifyClientOnEveryRequest: true // whether to hit the /auth/session endpoint on every client request
       }
     }
   },

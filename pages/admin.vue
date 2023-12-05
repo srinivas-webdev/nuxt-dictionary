@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//definePageMeta({ middleware: 'auth' })
 const { status, user, signOut, signIn } = useAuth()
 useHead({
   title: 'Admin Page',
