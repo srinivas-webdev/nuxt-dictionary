@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import gsap from "gsap";
-import { onMounted, ref, watch } from "vue"
+import { onMounted, ref } from "vue"
 
 const props = defineProps({
   mediaList: {
@@ -14,13 +14,11 @@ const props = defineProps({
 })
 
 const container = ref<HTMLElement | null>(null)
-const leftArrow = ref()
-const rightArrow = ref()
-const showLeftArrow = ref(false)
-const showRightArrow = ref(true)
+const disableLeftArrow = ref(true)
+const disableRightArrow = ref(false)
 
 let index = 0
-const slideAmount = 264
+const slideAmount = 248
 
 const startPosX = ref(0)
 
@@ -41,30 +39,14 @@ const onTouchEnd = (ev: TouchEvent) => {
 onMounted(() => {
   const containerWidth = container.value?.offsetWidth
   const mediaWidth = props.mediaList.length * slideAmount
-  leftArrow.value.disabled = true
+  disableLeftArrow.value = true
 
   if (props.mediaList.length === 1) {
-    rightArrow.value.disabled = true
+    disableRightArrow.value = true
   }
   
   if (containerWidth && mediaWidth && containerWidth > mediaWidth) {
-    rightArrow.value.disabled = true
-  }
-})
-
-watch(showLeftArrow, (leftArrowStatus) => {
-  if (!leftArrowStatus) {
-    leftArrow.value.disabled = true
-  } else {
-    leftArrow.value.disabled = false
-  }
-})
-
-watch(showRightArrow, (rightArrowStatus) => {
-  if (!rightArrowStatus) {
-    rightArrow.value.disabled = true
-  } else {
-    rightArrow.value.disabled = false
+    disableRightArrow.value = true
   }
 })
 
@@ -75,9 +57,9 @@ const onClickRight = () => {
       x: Number(`-${index * slideAmount}`),
       duration: 0.5,
       onComplete: () => {
-        showLeftArrow.value = true
+        disableLeftArrow.value = false
         if (index === props.mediaList.length - 1) 
-          showRightArrow.value = false
+          disableRightArrow.value = true
       }
     })
   }
@@ -90,9 +72,9 @@ const onClickLeft = () => {
       x: Number(`${-index * slideAmount}`),
       duration: 0.5,
       onComplete: () => {
-        showRightArrow.value = true
+        disableRightArrow.value = false
         if (index === 0) 
-          showLeftArrow.value = false
+          disableLeftArrow.value = true
       }
     })
   }
@@ -106,7 +88,7 @@ const onClickLeft = () => {
   >
     <section class="grid place-items-center">
       <button 
-        ref="leftArrow"
+        :disabled="disableLeftArrow"
         class="bg-purple-500 w-8 h-8 grid place-items-center disabled:bg-gray-400
         p-2 rounded-full hover:scale-125 hover:bg-orange-600"
         @click="onClickLeft"
@@ -139,7 +121,7 @@ const onClickLeft = () => {
     </section>
     <section class="grid place-items-center">
       <button 
-        ref="rightArrow"
+        :disabled="disableRightArrow"
         class="bg-purple-500 w-8 h-8 grid place-items-center disabled:bg-gray-400
         p-2 rounded-full hover:scale-125 hover:bg-orange-600"
         @click="onClickRight"
