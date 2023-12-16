@@ -15,10 +15,22 @@ const colors = [
   'rgb(20, 138, 8)', 'rgb(235, 30, 50)'
 ]
 
+const { status } = useAuth()
+const phraseDetails = usePhraseDetails()
+const editedPhraseId = useEditedPhraseId()
+
+
 const route = useRoute()
 const searchText = route.query['search']
-const {data: phraseData}= await useFetch(`/api/phrase/exactSearch?phrase=${searchText}`)
+const {data: phraseData} = await useFetch<PhraseDetails>(`/api/phrase/exactSearch?phrase=${searchText}`)
 
+const onClickUpdate = () => {
+  if (phraseData.value) {
+    phraseDetails.value = phraseData.value
+    editedPhraseId.value =  phraseData.value.id
+    navigateTo('/phrase/create')
+  }
+}
 </script>
 
 <template>
@@ -28,15 +40,23 @@ const {data: phraseData}= await useFetch(`/api/phrase/exactSearch?phrase=${searc
         Meaning(s) of <span class="font-extrabold text-xl">
           {{ searchText }}</span> in English
       </p>
+      <button 
+        v-if="status === 'authenticated'" 
+        class="flex items-center justify-center space-x-2 bg-blue-900 text-white rounded-lg 
+        py-2 px-4 text-lg shadow-2xl" 
+        @click="onClickUpdate"
+      >
+        <span>Update Phrase</span>
+      </button>
     </menu>
   
     <menu 
-      v-if="phraseData?.length"
+      v-if="phraseData"
       class="my-container"
     >
       <section 
-        v-for="meaning in phraseData[0].meanings"
-        :key="meaning"
+        v-for="meaning in phraseData.meanings"
+        :key="meaning.name"
         class="m-1 mr-2 rounded-md p-1 rounded-md 
           text-white flex flex-col gap-2 custom-shadow"
         :style="{ 'background-color': colors[Math.floor(Math.random()*colors.length)] }"

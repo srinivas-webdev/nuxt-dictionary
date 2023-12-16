@@ -12,6 +12,7 @@ declare global {
     media?: Media []
   }
   type PhraseDetails = {
+    id?: number,
     name: string,
     meanings: Meaning[]
   }

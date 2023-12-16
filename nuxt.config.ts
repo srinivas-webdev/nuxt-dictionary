@@ -10,6 +10,8 @@ export default defineNuxtConfig({
     lintOnStart: false
   },
   runtimeConfig: {
+    cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+    cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
     supaBaseUrl: process.env.SUPABASE_URL,
     supaBaseKey: process.env.SUPABASE_KEY,
     adminEmail: process.env.ADMIN_EMAIL,
@@ -21,6 +23,9 @@ export default defineNuxtConfig({
       clientSecret: process.env.NUXT_GITHUB_CLIENT_SECRET
     },
     public: {
+      cloudinaryApiBase: process.env.CLOUDINARY_URL,
+      cloudinaryApiCloudName: process.env.CLOUDINARY_CLOUD_NAME,
+      cloudinaryApiUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET,
       authJs: {
         baseUrl: process.env.NUXT_NEXTAUTH_URL, // The URL of your deployed app (used for origin Check in production)
       }

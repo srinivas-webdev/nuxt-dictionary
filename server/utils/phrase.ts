@@ -31,6 +31,7 @@ async function searchExactPhrase(name: String) {
     .from('phrase')
     .select("id, name, meanings")
     .eq('name', name)
+    .single()
 
   return phrase
 }
