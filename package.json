@@ -25,7 +25,9 @@
   "dependencies": {
     "@auth/core": "^0.17.0",
     "@hebilicious/authjs-nuxt": "^0.3.5",
+    "@pinia/nuxt": "^0.5.1",
     "@supabase/supabase-js": "^2.38.3",
-    "gsap": "^3.12.2"
+    "gsap": "^3.12.2",
+    "pinia": "^2.1.7"
   }
 }

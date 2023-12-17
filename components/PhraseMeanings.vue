@@ -8,7 +8,11 @@ const colors = [
   'rgb(20, 138, 8)', 'rgb(235, 30, 50)'
 ]
 
-const phraseDetails = usePhraseDetails()
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
+const store = usePhraseStore()
+const { phraseDetails } = storeToRefs(store)
+//const phraseDetails = usePhraseDetails()
 
 let activeMenuIndex: number|undefined = 0;
 const editMeaning = ref(false);

@@ -4,7 +4,8 @@ export default defineNuxtConfig({
   modules: [
     "@nuxtjs/eslint-module",
     "@nuxtjs/tailwindcss",
-    "@hebilicious/authjs-nuxt"
+    "@hebilicious/authjs-nuxt",
+    "@pinia/nuxt",
   ],
   eslint: {
     lintOnStart: false

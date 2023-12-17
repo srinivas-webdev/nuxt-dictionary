@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const phraseDetails = usePhraseDetails()
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
+const store = usePhraseStore()
+const { phraseDetails } = storeToRefs(store)
+//const phraseDetails = usePhraseDetails()
 const props = defineProps({
   index: {
     type: Number,

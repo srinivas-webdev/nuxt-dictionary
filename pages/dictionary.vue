@@ -16,8 +16,13 @@ const colors = [
 ]
 
 const { status } = useAuth()
-const phraseDetails = usePhraseDetails()
-const editedPhraseId = useEditedPhraseId()
+
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
+const store = usePhraseStore()
+const { phraseDetails, editedPhraseId } = storeToRefs(store)
+//const phraseDetails = usePhraseDetails()
+//const editedPhraseId = useEditedPhraseId()
 
 
 const route = useRoute()

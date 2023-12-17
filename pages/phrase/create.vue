@@ -14,8 +14,12 @@ definePageMeta({
   ]
 });
 
-const phraseDetails = usePhraseDetails()
-const editedPhraseId = useEditedPhraseId()
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
+const store = usePhraseStore()
+const { phraseDetails, editedPhraseId } = storeToRefs(store)
+//const phraseDetails = usePhraseDetails()
+//const editedPhraseId = useEditedPhraseId()
 
 const phraseName = ref("")
 const meanings = ref<Meaning[]>([])

@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue"
 
-const phraseDetails = usePhraseDetails()
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
+const store = usePhraseStore()
+const { phraseDetails } = storeToRefs(store)
+//const phraseDetails = usePhraseDetails()
 const props = defineProps({
   activeMeaningIndex: {
     type: Number,
