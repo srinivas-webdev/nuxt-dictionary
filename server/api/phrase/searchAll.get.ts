@@ -1,6 +1,6 @@
 export default defineEventHandler(async (event) => {
   const query: any = getQuery(event)
-  const res = await searchAllPhrases(query.word)
+  const res = await searchAllPhrases(query.phraseType, query.word)
   const phrases = res?.map(phrase => phrase.name)
   
   // divide the phrases into groups of 10 

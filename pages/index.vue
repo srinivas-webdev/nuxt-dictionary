@@ -20,6 +20,19 @@ useHead({
       </p>
     </div>
     <WordOfMoment />
-    <BrowseContainer />
+    <section class="grid gap-12 grid-cols-1 sm:grid-cols-2 justify-around">
+      <BrowseContainer 
+        phrase-type="Idioms"  
+        bg-color="bg-sky-200" 
+        hover-color="bg-blue-950"
+        text-color="blue-950"
+      />
+      <BrowseContainer 
+        phrase-type="Phrasal Verbs"
+        bg-color="bg-yellow-400" 
+        hover-color="bg-blue-950"
+        text-color="blue-950"
+      />
+    </section>
   </main>
 </template>

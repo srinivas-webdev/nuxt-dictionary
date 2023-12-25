@@ -42,8 +42,14 @@ const onClickUpdate = () => {
   <main>
     <menu class="flex justify-between items-center mt-2 p-1">
       <p class="text-blue-900 italic">
-        Meaning(s) of <span class="font-extrabold text-xl">
-          {{ searchText }}</span> in English
+        Meaning(s) of 
+        <span class="font-extrabold text-2xl">
+          {{ searchText }}
+        </span>
+        <span class="pl-2 font-extrabold text-xl text-orange-500">
+          {{ phraseData?.type == 1 ? '(Idiom)' : '(Phrasal Verb)' }}
+        </span>
+        in English
       </p>
       <button 
         v-if="status === 'authenticated'" 
@@ -63,24 +69,33 @@ const onClickUpdate = () => {
         v-for="meaning in phraseData.meanings"
         :key="meaning.name"
         class="m-1 mr-2 rounded-md p-1 rounded-md 
-          text-white flex flex-col gap-2 custom-shadow"
-        :style="{ 'background-color': colors[Math.floor(Math.random()*colors.length)] }"
+          text-gray-900 flex flex-col gap-2 custom-shadow bg-gray-200"
       >
         <p class="text-xl font-normal">
           {{ meaning.name }}
         </p>
         <p class="border border-b-2  border-green-500" />
-        <p class="text-lg font-semibold">
+        <p class="text-lg text-purple-600 font-bold">
           Example Sentences:
         </p>
-        <li 
+        <p
           v-for="(example, index) in meaning.examples"
           :key="index"
-          class="italic flex flex-col gap-2 text-xl font-normal  leading-4" 
+          class="leading-normal italic text-xl font-normal rounded-md shadow-md p-2 bg-orange-600 text-white" 
         >
           {{ index+1 }}. {{ example }} 
-        </li>
+        </p>
         <p class="border border-b-2 border-gray-400" />
+        <section v-if="phraseData?.origin">
+          <p class="text-xl text-orange-600 font-bold">
+            Origin:
+          </p>
+          <p class="italic text-lg font-semibold rounded-md p-2 m-2 shadow-md bg-gray-300">
+            {{ phraseData.origin }}
+          </p>
+          <p class="border border-b-2 border-green-400" />
+        </section>
+        
         <MediaContainer :media-list="meaning.media" />
       </section>
     </menu>

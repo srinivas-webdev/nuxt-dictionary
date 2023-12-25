@@ -2,11 +2,19 @@
 const route = useRoute()
 const {data: phrases}= await useFetch(`/api/phrase/searchFromTo`, {
   query: {
+    phraseType: route.params.phraseType,
     alphabet: route.params.alphabet,
     from: route.query["from"], 
     to: route.query["to"],
    }
 })
+
+const getPhraseType = () => {
+  if (route.params.phraseType == 'idioms') {
+    return 'Idioms'
+  } 
+  return 'Phrasal Verbs'
+}
 
 const onClick = (phrase: string) =>{
   navigateTo(`/dictionary?search=${phrase}`)
@@ -26,7 +34,7 @@ useHead({
     </Head>
     <section class="grid grid-cols-1 m-8 gap-4">
       <p class="text-3xl font-lg text-[#1d2a57] pb-4 border-dotted border-b-2">
-        Words starting from 
+        <span class="italic font-bold text-orange-500">{{ getPhraseType() }}</span> starting with 
         <span class="font-extrabold text-sky-600 px-2">
           {{ route.query["from"] }} 
         </span>
@@ -35,7 +43,12 @@ useHead({
           {{ route.query["to"] }}
         </span>
       </p>
-      <BrowseContainer />
+      <BrowseContainer 
+        :phrase-type="getPhraseType()"
+        bg-color="bg-yellow-400" 
+        hover-color="bg-blue-950"
+        text-color="blue-950"
+      />
       <section class="flex flex-wrap">
         <button 
           v-for="phrase in phrases"

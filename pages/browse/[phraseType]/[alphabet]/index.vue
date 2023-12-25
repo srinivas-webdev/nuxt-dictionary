@@ -1,13 +1,25 @@
 <script setup lang="ts">
 const route = useRoute()
-const {data: phrases}= await useFetch(`/api/phrase/searchAll?word=${route.params.alphabet}`)
+const {data: phrases}= await useFetch(`/api/phrase/searchAll`, {
+  query: {
+    phraseType: route.params.phraseType,
+    word: route.params.alphabet,
+  }
+})
+
+const getPhraseType = () => {
+  if (route.params.phraseType == 'idioms') {
+    return 'Idioms'
+  } 
+  return 'Phrasal Verbs'
+}
 
 const getHref = (phrase: string[]) =>{
   let href = ""
   if (phrase[0] === phrase[1]) {
-    href = "/dictionary?search="+phrase[0]
+    href = `/dictionary?search=${phrase[0]}`
   } else {
-    href = "/browse/"+route.params.alphabet+"/from-to"
+    href = "/browse/"+route.params.phraseType+"/"+route.params.alphabet+"/from-to"
     +"?from="+phrase[0]+"&to="+phrase[1]
   }
   
@@ -28,12 +40,17 @@ useHead({
     </Head>
     <section class="grid grid-cols-1 m-8 gap-4">
       <p class="text-3xl font-lg text-[#1d2a57] pb-4 border-dotted border-b-2">
-        Words starting with 
+        <span class="italic font-bold text-orange-500">{{ getPhraseType() }}</span> starting with 
         <span class="font-extrabold text-sky-600">
           {{ route.params.alphabet }}
         </span>
       </p>
-      <BrowseContainer />
+      <BrowseContainer 
+        :phrase-type="getPhraseType()"
+        bg-color="bg-yellow-400" 
+        hover-color="bg-blue-950"
+        text-color="blue-950"
+      />
       <menu class="flex flex-wrap">
         <a 
           v-for="phrase in phrases"

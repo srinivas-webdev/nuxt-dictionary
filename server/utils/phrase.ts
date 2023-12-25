@@ -4,11 +4,11 @@ const config = useRuntimeConfig()
 // Create a single supabase client for interacting with the database
 const supabase = createClient(config.supaBaseUrl, config.supaBaseKey)
 
-async function createPhrase(name: String, meanings: Object) {
+async function createPhrase(name: String, type: string, origin: string, meanings: Object) {
   const { data } = await supabase
     .from('phrase')
     .insert([
-      { name: name, meanings: meanings },
+      { name: name, type: type, origin: origin, meanings: meanings },
     ])
     .select()
 
@@ -29,36 +29,44 @@ async function searchPhrase(name: String) {
 async function searchExactPhrase(name: String) {
   const { data: phrase } = await supabase
     .from('phrase')
-    .select("id, name, meanings")
+    .select("id, name, type, origin, meanings")
     .eq('name', name)
     .single()
 
   return phrase
 }
 
-async function updatePhrase(id: String, name:String, meanings:Object) {
+async function updatePhrase(id: String, name:String, type: string, origin: string, meanings:Object) {
   const { error } = await supabase
     .from('phrase')
-    .update({ name: name, meanings: meanings })
+    .update({ name: name, type: type, origin: origin, meanings: meanings })
     .eq('id', id)
 
   return error
 }
 
-async function searchAllPhrases(name: String) {
+async function searchAllPhrases(phraseType: string, name: String) {
+  let type = 0
+  if (phraseType == 'idioms') type = 1
+
   const { data: phrase } = await supabase
   .from('phrase')
   .select("name")
+  .eq('type', type)
   .ilike('name', name+'%')
   .order('name', { ascending: true })
 
   return phrase
 }
 
-async function searchPhrasesFromTo(alphabet: String, from: String, to: String) {
+async function searchPhrasesFromTo(phraseType:string,  alphabet: String, from: String, to: String) {
+  let type = 0
+  if (phraseType == 'idioms') type = 1
+
   const { data: phrase } = await supabase
   .from('phrase')
   .select("name")
+  .eq('type', type)
   .ilike('name', alphabet+'%')
   .order('name', { ascending: true })
   .gte('name', from)

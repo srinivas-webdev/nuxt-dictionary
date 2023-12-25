@@ -1,6 +1,10 @@
-export type { Media, Meaning, PhraseDetails };
+export type { Media, Meaning, PhraseDetails, PhraseType };
 
 declare global {
+  enum PhraseType {
+    PhrasalVerb,
+    Idiom
+  }
   type Media = {
     url: string,
     publicId?: string,
@@ -14,6 +18,8 @@ declare global {
   type PhraseDetails = {
     id?: number,
     name: string,
+    type?: PhraseType,
+    origin?: string,
     meanings: Meaning[]
   }
 }
