@@ -23,14 +23,14 @@ useHead({
     <section class="grid gap-12 grid-cols-1 sm:grid-cols-2 justify-around">
       <BrowseContainer 
         phrase-type="Idioms"  
-        bg-color="bg-sky-200" 
-        hover-color="bg-blue-950"
+        bg-color="bg-cyan-200" 
+        hover-color="#0e7490"
         text-color="blue-950"
       />
       <BrowseContainer 
         phrase-type="Phrasal Verbs"
-        bg-color="bg-yellow-400" 
-        hover-color="bg-blue-950"
+        bg-color="bg-pink-300" 
+        hover-color="#be185d"
         text-color="blue-950"
       />
     </section>

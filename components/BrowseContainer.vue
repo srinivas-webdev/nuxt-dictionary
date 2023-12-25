@@ -10,7 +10,7 @@ const props = defineProps({
   },
   hoverColor: {
     type: String,
-    default: "bg-blue-950"
+    default: "#16a34a"
   },
   textColor: {
     type: String,
@@ -42,9 +42,9 @@ const onClickAlphabet = (alphabet: string) => {
         v-for="ch in alphabets"
         :key="ch"
         class="grid place-items-center text-xl font-bold rounded-md 
-        w-12 p-2 shadow-md 
+        w-12 p-2 shadow-md alphabet
         hover:text-white"
-        :class="['text-'+props.textColor, props.bgColor, 'hover:'+props.hoverColor]"
+        :class="['text-'+$props.textColor, $props.bgColor]"
         @click="onClickAlphabet(ch)"
       >
         {{ ch }}
@@ -62,4 +62,9 @@ const onClickAlphabet = (alphabet: string) => {
   .custom-shadow {
     box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.6);
   }
+
+  .alphabet:hover {
+    background-color: v-bind('$props.hoverColor');
+  }
+
 </style>

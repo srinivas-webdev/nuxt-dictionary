@@ -48,7 +48,7 @@ useHead({
       <BrowseContainer 
         :phrase-type="getPhraseType()"
         bg-color="bg-yellow-400" 
-        hover-color="bg-blue-950"
+        hover-color="#9333ea"
         text-color="blue-950"
       />
       <menu class="flex flex-wrap">
