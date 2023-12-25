@@ -81,15 +81,19 @@ const onClickUpdate = () => {
           {{ index+1 }}. {{ example }} 
         </p>
         <p class="border border-b-2 border-gray-300" />
-        <section v-if="phraseData?.origin">
-          <p class="text-xl text-orange-600 font-bold">
+        <details 
+          v-if="phraseData?.origin" 
+          open
+          class="bg-teal-100 rounded-xl pl-2" 
+        >
+          <summary class="text-xl text-orange-600 font-bold">
             Origin:
-          </p>
-          <p class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-yellow-50">
+          </summary>
+          <p class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-teal-50">
             {{ phraseData.origin }}
           </p>
           <p class="border border-b-2 border-gray-300" />
-        </section>
+        </details>
         
         <MediaContainer :media-list="meaning.media" />
       </section>
