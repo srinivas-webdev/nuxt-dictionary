@@ -8,12 +8,7 @@ useHead({
     lang: 'en'
   }
 })
-const colors = [
-  'rgb(30, 50, 100)', 'rgb(0, 100, 80)',
-  'rgb(232, 17, 91)', 'rgb(194 0 23)',
-  'rgb(30, 50, 100)', 'rgb(140, 25, 50)',
-  'rgb(20, 138, 8)', 'rgb(235, 30, 50)'
-]
+
 
 const { status } = useAuth()
 
@@ -54,7 +49,7 @@ const onClickUpdate = () => {
       <button 
         v-if="status === 'authenticated'" 
         class="flex items-center justify-center space-x-2 bg-blue-900 text-white rounded-lg 
-        py-2 px-4 text-lg shadow-2xl" 
+        py-2 px-4 text-lg shadow-2xl hover:bg-purple-700" 
         @click="onClickUpdate"
       >
         <span>Update Phrase</span>
@@ -68,14 +63,14 @@ const onClickUpdate = () => {
       <section 
         v-for="meaning in phraseData.meanings"
         :key="meaning.name"
-        class="m-1 mr-2 rounded-md p-1 rounded-md 
-          text-gray-900 flex flex-col gap-2 custom-shadow bg-gray-200"
+        class="m-1 mr-2 rounded-md p-1 rounded-xl border-solid border-4 border-teal-500
+          text-gray-900 flex flex-col gap-2 shadow-xl bg-teal-50"
       >
         <p class="text-xl font-normal">
           {{ meaning.name }}
         </p>
-        <p class="border border-b-2  border-green-500" />
-        <p class="text-lg text-purple-600 font-bold">
+        <p class="border border-b-2  border-gray-300" />
+        <p class="text-lg text-blue-900 font-bold">
           Example Sentences:
         </p>
         <p
@@ -85,15 +80,15 @@ const onClickUpdate = () => {
         >
           {{ index+1 }}. {{ example }} 
         </p>
-        <p class="border border-b-2 border-gray-400" />
+        <p class="border border-b-2 border-gray-300" />
         <section v-if="phraseData?.origin">
           <p class="text-xl text-orange-600 font-bold">
             Origin:
           </p>
-          <p class="italic text-lg font-semibold rounded-md p-2 m-2 shadow-md bg-gray-300">
+          <p class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-yellow-50">
             {{ phraseData.origin }}
           </p>
-          <p class="border border-b-2 border-green-400" />
+          <p class="border border-b-2 border-gray-300" />
         </section>
         
         <MediaContainer :media-list="meaning.media" />
