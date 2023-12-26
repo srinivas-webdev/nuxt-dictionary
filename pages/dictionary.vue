@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import gsap from 'gsap';
+
 useHead({
   title: 'Dictionary of Idioms and Phrasal verbs',
   meta: [
@@ -16,9 +19,12 @@ import { storeToRefs } from 'pinia'
 import { usePhraseStore } from '@/stores/phrase'
 const store = usePhraseStore()
 const { phraseDetails, editedPhraseId } = storeToRefs(store)
-//const phraseDetails = usePhraseDetails()
-//const editedPhraseId = useEditedPhraseId()
 
+const showWordOrigin = ref(false)
+
+onMounted(() => {
+  showWordOrigin.value = true
+})
 
 const route = useRoute()
 const searchText = route.query['search']
@@ -30,6 +36,46 @@ const onClickUpdate = () => {
     editedPhraseId.value =  phraseData.value.id
     navigateTo('/phrase/create')
   }
+}
+
+const onBeforeEnter = (el: Element) => {
+  gsap.set(el, {
+    opacity: 0,
+    xPercent: 10
+  })
+  gsap.set(".hand-icon", {
+    rotate: -90,
+  })
+}
+
+const onEnter = (el: Element, done: () => void) => {
+  gsap.to(el, {
+    duration: 0.5,
+    opacity: 1,
+    xPercent: 0,
+    ease: 'elastic.Out(2, 1)',
+    onComplete: done
+  })
+  gsap.to(".hand-icon", {
+    duration: 0.5,
+    rotate: 0,
+    ease: 'elastic.Out(2, 1)',
+  })
+}
+
+const onLeave = (el: Element, done: () => void) => {
+  gsap.to(el, {
+    duration: 0.5,
+    opacity: 0,
+    xPercent: 10,
+    ease: 'elastic.Out(2, 1)',
+    onComplete: done
+  })
+  gsap.to(".hand-icon", {
+    duration: 0.5,
+    rotate: -90,
+    ease: 'elastic.Out(2, 1)',
+  })
 }
 </script>
 
@@ -81,19 +127,41 @@ const onClickUpdate = () => {
           {{ index+1 }}. {{ example }} 
         </p>
         <p class="border border-b-2 border-gray-300" />
-        <details 
+        
+        <section 
           v-if="phraseData?.origin" 
-          open
-          class="bg-teal-100 rounded-xl pl-2" 
+          class="flex flex-col gap-2 bg-teal-100 rounded-xl" 
         >
-          <summary class="text-xl text-orange-600 font-bold">
-            Origin:
-          </summary>
-          <p class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-teal-50">
-            {{ phraseData.origin }}
-          </p>
+          <section 
+            class="flex gap-2 rounded-lg p-2 rounded-lg 
+            border-solid border-2 
+            border-purple-500 hover:bg-indigo-100 hover:cursor-pointer"
+            @click="showWordOrigin = !showWordOrigin"
+          >
+            <img 
+              src="~/assets/hand.png"
+              class="hand-icon w-8 h-8"
+            >
+            <summary class="text-xl text-orange-600 font-bold">
+              Word Origin
+            </summary>
+          </section>
+          
+          <Transition 
+            appear
+            @before-enter="onBeforeEnter"
+            @enter="onEnter"
+            @leave="onLeave"
+          >
+            <p 
+              v-if="showWordOrigin" 
+              class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-teal-50">
+              {{ phraseData.origin }}
+            </p>
+          </Transition>
+          
           <p class="border border-b-2 border-gray-300" />
-        </details>
+        </section>
         
         <MediaContainer :media-list="meaning.media" />
       </section>
