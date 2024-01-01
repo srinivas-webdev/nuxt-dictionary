@@ -155,7 +155,8 @@ const onLeave = (el: Element, done: () => void) => {
           >
             <p 
               v-if="showWordOrigin" 
-              class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-teal-50">
+              class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-teal-50"
+            >
               {{ phraseData.origin }}
             </p>
           </Transition>
