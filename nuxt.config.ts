@@ -34,5 +34,10 @@ export default defineNuxtConfig({
   },
   alias: {
     cookie: "cookie"
+  },
+  nitro: {
+    compressPublicAssets: {
+      brotli: true
+    }
   }
 })
