@@ -7,14 +7,14 @@
 
 <script setup lang="ts">
 useSeoMeta({
-  title: 'Welcome to Godavari Water Booking App',
-  ogTitle: 'Welcome to Godavari Water Booking App',
-  description: 'Online water provider in Vizag',
+  title: "Dhruthi's Idioms & Phrasal Verbs Dictionary",
+  ogTitle: "Dhruthi's Idioms & Phrasal Verbs Dictionary",
+  description: "Dhruthi's Idioms & Phrasal Verbs Dictionary",
 })
 useHead({
-  title: 'Godavari Water',
+  title: "Dhruthi's Idioms & Phrasal Verbs Dictionary",
   meta: [
-    { name: 'description', content: 'Godavari Water in Vizag' },
+    { name: 'description', content: "Dhruthi's Idioms & Phrasal Verbs Dictionary", },
     { name: 'theme-color', content: '#FFFFFF', media: '(prefers-color-scheme: light)' },
     { name: 'theme-color', content: '#000000', media: '(prefers-color-scheme: dark)' }
   ],

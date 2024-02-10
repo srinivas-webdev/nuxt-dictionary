@@ -44,8 +44,8 @@ export default defineNuxtConfig({
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
-      name: 'Godavari Water',
-      short_name: 'Godavari',
+      name: 'Idioms & Phrasal Verbs Dictionary',
+      short_name: 'Idioms',
       theme_color: '#ffffff',
       icons: [
         {
