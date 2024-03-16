@@ -104,30 +104,31 @@ const onLeave = (el: Element, done: () => void) => {
   
     <menu 
       v-if="phraseData"
-      class="my-container"
+      class="meaning-container"
     >
       <section 
         v-for="meaning in phraseData.meanings"
         :key="meaning.name"
-        class="m-1 mr-2 rounded-md p-1 rounded-xl border-solid border-4 border-teal-500
-          text-gray-900 flex flex-col gap-2 shadow-xl bg-teal-50"
+        class="meaning m-1 mr-2 rounded-md p-1 rounded-xl border-solid border-4 border-teal-500
+          text-gray-900 gap-2 shadow-xl bg-teal-50"
       >
-        <p class="text-xl font-normal">
-          {{ meaning.name }}
-        </p>
-        <p class="border border-b-2  border-gray-300" />
-        <p class="text-lg text-blue-900 font-bold">
-          Example Sentences:
-        </p>
-        <p
-          v-for="(example, index) in meaning.examples"
-          :key="index"
-          class="leading-normal italic text-xl font-normal rounded-md shadow-md p-2 bg-orange-600 text-white" 
-        >
-          {{ index+1 }}. {{ example }} 
-        </p>
-        <p class="border border-b-2 border-gray-300" />
-        
+        <section class="item">
+          <p class="text-xl font-normal">
+            {{ meaning.name }}
+          </p>
+        </section>
+        <section class="item flex flex-col gap-2">
+          <p class="text-lg text-blue-900 font-bold">
+            Example Sentences:
+          </p>
+          <p
+            v-for="(example, index) in meaning.examples"
+            :key="index"
+            class="leading-normal italic text-xl font-normal rounded-md shadow-md p-2 bg-orange-600 text-white" 
+          >
+            {{ index+1 }}. {{ example }} 
+          </p>
+        </section>
         <section 
           v-if="phraseData?.origin" 
           class="flex flex-col gap-2 bg-teal-100 rounded-xl" 
@@ -160,8 +161,6 @@ const onLeave = (el: Element, done: () => void) => {
               {{ phraseData.origin }}
             </p>
           </Transition>
-          
-          <p class="border border-b-2 border-gray-300" />
         </section>
         
         <MediaContainer :media-list="meaning.media" />
@@ -171,11 +170,23 @@ const onLeave = (el: Element, done: () => void) => {
 </template>
 
 <style scoped>
-  .my-container {
+  .meaning-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    grid-template-rows: auto;
   }
   .custom-shadow {
     box-shadow: 3px 3px 2px 0px rgb(65, 1, 1);
+  }
+
+  .meaning {
+    display: grid;
+    grid-row: span 4;
+    grid-template-rows: subgrid;
+  }
+
+  .item {
+    padding-block-end: 0.25rem;
+    border-bottom: 2px solid #d1d5db;
   }
 </style>
