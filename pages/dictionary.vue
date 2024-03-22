@@ -77,6 +77,25 @@ const onLeave = (el: Element, done: () => void) => {
     ease: 'elastic.Out(2, 1)',
   })
 }
+
+const baseColors = [
+  'indigo', 'purple', 'DarkMagenta', 'red', 
+  'OrangeRed', 'MediumVioletRed', 'DarkSlateBlue',
+  'green', 'teal', 'DarkSlateGray'
+]
+let initBaseColor = '';
+
+const getRandomBaseColor = (index: number) => {
+  if (index === 0) {
+    initBaseColor = baseColors[Math.floor(Math.random() * baseColors.length)]
+  }
+  return initBaseColor
+}
+
+const getColorOffset = (total: number, index: number) => {
+  const middleIndex = Math.floor(total/2)
+  return (middleIndex - index) * 0.05
+}
 </script>
 
 <template>
@@ -125,6 +144,7 @@ const onLeave = (el: Element, done: () => void) => {
             v-for="(example, index) in meaning.examples"
             :key="index"
             class="leading-normal italic text-xl font-normal rounded-md shadow-md p-2 bg-orange-600 text-white" 
+            :style="{ 'background-color': 'oklch(from '+getRandomBaseColor(index)+' calc(l + '+getColorOffset(meaning.examples?.length ?? 0, index)+') c h)' }"
           >
             {{ index+1 }}. {{ example }} 
           </p>
