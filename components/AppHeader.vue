@@ -179,6 +179,11 @@ function onChangeSearchText(ev: Event) {
 function onCompositionUpdate(ev: CompositionEvent) {
   searchInputText.value = ev.data
 }
+
+const getColorOffset = (total: number, index: number) => {
+  const middleIndex = Math.floor(total/2)
+  return (middleIndex - index) * 0.025
+}
 </script>
 
 <template>
@@ -300,9 +305,9 @@ function onCompositionUpdate(ev: CompositionEvent) {
             <a 
               v-for="(word, index) in matchedPhrases" 
               :key="index"
-              class="pl-2 cursor-pointer"  
+              class="pl-2 cursor-pointer rounded-md m-[2px] shadow-xl"  
               :href="'/dictionary?search='+word"
-              :class="{'bg-blue-100 cursor:pointer': index == activePhraseIndex}"
+              :style="{ 'background-color': index !== activePhraseIndex ? 'oklch(from springgreen calc(l + '+getColorOffset(matchedPhrases?.length ?? 0, index)+') c h)' : 'gold' }"
               @click="searchInputText = word"
               @mouseenter="handleMouseEventOnActivePhrase(index, 'mouseenter')"
               @mouseleave="activePhraseIndex = -1"
