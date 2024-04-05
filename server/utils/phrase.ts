@@ -19,7 +19,7 @@ async function searchPhrase(name: String) {
   const { data: phrase } = await supabase
   .from('phrase')
   .select("name")
-  .ilike('name', name+'%')
+  .ilike('name', `%${name}%`)
   .limit(10)
   .order('name', { ascending: true })
   
