@@ -81,7 +81,7 @@ const onLeave = (el: Element, done: () => void) => {
 const baseColors = [
   'indigo', 'purple', 'DarkMagenta', 'red', 
   'OrangeRed', 'MediumVioletRed', 'DarkSlateBlue',
-  'green', 'teal', 'DarkSlateGray'
+  'green', 'crimson', 'DarkSlateGray', 'maroon'
 ]
 let initBaseColor = '';
 
@@ -93,7 +93,7 @@ const getRandomBaseColor = (index: number) => {
 }
 
 const getColorOffset = (total: number, index: number) => {
-  const middleIndex = Math.floor(total/2)
+  const middleIndex = Math.floor(total/2-1)
   return (middleIndex - index) * 0.05
 }
 </script>
