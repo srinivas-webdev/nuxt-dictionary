@@ -1,4 +1,6 @@
 <script setup>
+import categories from '~/data/reductions.json'
+
 useHead({
   title: 'Word Reductions',
   htmlAttrs: {
@@ -33,24 +35,7 @@ function toggleAccordion(activePanelButton) {
   }
 }
 
-const categories = [
-  {
-    name: "what",
-    items: [
-      [
-        "What do you", "వాజ్యూ"
-      ]
-    ]
-  },
-  {
-    name: "why",
-    items: [
-      [
-        "Why do you", "వైజ్యూ"
-      ]
-    ]
-  }
-]
+
 </script>
 
 <template>
@@ -59,13 +44,13 @@ const categories = [
       <section 
         v-for="category in categories" 
         :key="category.name"
-        class="accordion-panel"
+        class="accordion-panel flex flex-col gap-1"
       >
         <button 
           class="accordion-trigger" 
           aria-expanded="true"
         >
-          <p class="header-title">
+          <p class="header-title font-medium text-xl">
             {{ category.name }}
           </p>
           <img 
@@ -75,16 +60,26 @@ const categories = [
             aria-hidden="true"
           >
         </button>
-        <menu class="accordion-content">
-          <ul>
-            <li 
+        <table class="accordion-content table-fixed px-2 pb-1 text-xl font-medium border-separate">
+          <tbody>
+            <tr
               v-for="item in category.items"
               :key="item[0]"
+              class="mx-4"
             >
-              {{ item[0] }} - {{ item[1] }}
-            </li>
-          </ul>
-        </menu>
+              <td 
+                class="bg-purple-300 rounded-md shadow-md px-2"
+              >
+                {{ item[0] }}
+              </td>
+              <td 
+                class="bg-sky-200 rounded-md shadow-md px-2"
+              >
+                {{ item[1] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </menu>
   </main>
@@ -101,7 +96,7 @@ const categories = [
   grid-template-rows: 1fr;
 }
 
-.accordion-content > ul {
+.accordion-content > tbody {
   overflow: hidden;
 }
 
@@ -120,7 +115,7 @@ const categories = [
   cursor: pointer;
 }
 
-.accordion-trigger > p {
+.accordion-trigger > td {
   font-weight: 700;
   font-size: large;
 }
