@@ -143,6 +143,7 @@ const getColorOffset = (total: number, index: number) => {
           <p
             v-for="(example, index) in meaning.examples"
             :key="index"
+            data-allow-mismatch
             class="leading-normal italic text-xl font-normal rounded-md shadow-md p-2 bg-orange-600 text-white" 
             :style="{ 'background-color': 'oklch(from '+getRandomBaseColor(index)+' calc(l + '+getColorOffset(meaning.examples?.length ?? 0, index)+') c h)' }"
           >
@@ -163,9 +164,9 @@ const getColorOffset = (total: number, index: number) => {
               src="~/assets/hand.png"
               class="hand-icon w-8 h-8"
             >
-            <summary class="text-xl text-orange-600 font-bold">
+            <section class="text-xl text-orange-600 font-bold">
               Word Origin
-            </summary>
+            </section>
           </section>
           
           <Transition 

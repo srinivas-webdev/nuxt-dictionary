@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   modules: [
     "@nuxtjs/eslint-module",
     "@nuxtjs/tailwindcss",
@@ -8,9 +9,11 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     '@vite-pwa/nuxt',
   ],
+
   eslint: {
     lintOnStart: false
   },
+
   runtimeConfig: {
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
@@ -33,14 +36,17 @@ export default defineNuxtConfig({
       }
     }
   },
+
   alias: {
     cookie: "cookie"
   },
+
   nitro: {
     compressPublicAssets: {
       brotli: true
     }
   },
+
   pwa: {
     registerType: 'autoUpdate',
     manifest: {
@@ -102,5 +108,7 @@ export default defineNuxtConfig({
     client: {
       installPrompt: true,
     },
-  }
+  },
+
+  compatibilityDate: '2024-10-28'
 })
