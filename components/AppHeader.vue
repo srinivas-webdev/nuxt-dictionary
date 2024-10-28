@@ -169,7 +169,8 @@ function handleKeyEventOnActivePhrase(eventType: string, event: Event) {
 }
 
 function onClickClearButton() {
-  searchInputText.value = ""
+  searchInputRef.value?.focus();
+  searchInputText.value = "";
 }
 
 function onChangeSearchText(ev: Event) {
