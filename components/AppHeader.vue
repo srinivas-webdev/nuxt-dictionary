@@ -260,39 +260,33 @@ const getColorOffset = (total: number, index: number) => {
             class="relative mt-1 w-3/4 h-3/4 border-solid border-r-2 border-gray-300 pr-1"
           />
         </section>
-        <section 
-          id="search-query-button-wrapper" 
-          tabindex="0"
-          class="z-20 grid items-center bg-white px-4 rounded-tr-md"
+        <button 
+          id="search-query-button" 
+          role="button"
+          aria-label="Search" 
+          class="z-20 grid items-center bg-white px-4 rounded-tr-md cursor-pointer"
           :class="{'rounded-br-md': !showResultsMenu, 'bg-gradient-to-r from-yellow-500 to-pink-700': searchBtnFocused || searchBtnHovered}"
           @focusin="searchBtnFocused = true" 
           @focusout="searchBtnFocused = false"
           @mouseenter="searchBtnHovered = true" 
           @mouseleave="searchBtnHovered = false"
         >
-          <button 
-            id="search-query-button" 
-            role="button"
-            aria-label="Search" 
-            tabindex="-1" 
-            class="cursor-pointer"
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="18" 
+            height="17" 
+            class="icon" 
+            viewBox="0 0 18 17"
+            role="presentation"
           >
-            <svg 
-              xmlns="http://www.w3.org/2000/svg" 
-              width="18" 
-              height="17" 
-              class="icon" 
-              viewBox="0 0 18 17"
-            >
-              <path 
-                :fill="fillColor" 
-                fill-rule="evenodd" 
-                d="M1.6 7.336a5.736 5.736 0 1 1 11.471 0 5.736 5.736 0 0 1-11.471 0ZM7.336 0a7.336 7.336 0 1 0 4.957 12.743l3.56 3.561a.8.8 0 0 0 1.132-1.131l-3.636-3.636A7.336 7.336 0 0 0 7.335 0Z" 
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
-        </section>
+            <path 
+              :fill="fillColor" 
+              fill-rule="evenodd" 
+              d="M1.6 7.336a5.736 5.736 0 1 1 11.471 0 5.736 5.736 0 0 1-11.471 0ZM7.336 0a7.336 7.336 0 1 0 4.957 12.743l3.56 3.561a.8.8 0 0 0 1.132-1.131l-3.636-3.636A7.336 7.336 0 0 0 7.335 0Z" 
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
       </section>
       <section 
         v-if="showResultsMenu"
