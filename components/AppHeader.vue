@@ -25,20 +25,20 @@ watch(searchBtnFocused, (newSearchBtnFocused) => {
   fillColor.value = newSearchBtnFocused ? 'white' : 'black'
 })
 
-const debounce = (fn: Function, ms = 500) => {
+const debounce = (fn: (searchText: string | null) => void, ms = 500) => {
   let timeoutId: ReturnType<typeof setTimeout>;
-  return function (this: any, ...args: any[]) {
+  return function (args: string | null) {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args), ms);
+    timeoutId = setTimeout(() => fn(args), ms);
   };
 };
 
-watch(searchInputText, debounce((newSearchText: string) =>{
+watch(searchInputText, debounce((newSearchText: string | null) =>{
   searchPhrase(newSearchText)
 }))
 
-async function searchPhrase(searchText: string) {
-  if (!searchText.length) {
+async function searchPhrase(searchText: string | null) {
+  if (!searchText?.length) {
     matchedPhrases.value = null
     showResultsMenu.value = false
     activePhraseIndex.value = -1
@@ -76,8 +76,10 @@ function onClickSearchInput() {
 }
 
 function onKeyEnterSearchInput() {
-  const element: HTMLElement | null = document?.querySelector('#search-query-button')
-  element?.click()
+  const phrase: string | null = searchInputText.value;
+  if (phrase?.length) {
+    window.location.href =`/dictionary?search=${phrase}`;
+  }
 }
 
 function onClick(e: MouseEvent) {

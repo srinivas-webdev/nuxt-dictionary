@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import gsap from 'gsap';
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
 
 useHead({
   title: 'Dictionary of Idioms and Phrasal verbs',
@@ -15,8 +17,6 @@ useHead({
 
 const { status } = useAuth()
 
-import { storeToRefs } from 'pinia'
-import { usePhraseStore } from '@/stores/phrase'
 const store = usePhraseStore()
 const { phraseDetails, editedPhraseId } = storeToRefs(store)
 

@@ -3,11 +3,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: [
-    "@nuxtjs/eslint-module",
     "@nuxtjs/tailwindcss",
     "@hebilicious/authjs-nuxt",
     "@pinia/nuxt",
     '@vite-pwa/nuxt',
+    '@nuxt/eslint'
   ],
 
   eslint: {

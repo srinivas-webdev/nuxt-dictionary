@@ -1,12 +1,10 @@
 import Credentials from "@auth/core/providers/credentials";
 import GitHub from '@auth/core/providers/github';
-import type { AuthConfig } from "@auth/core/types"
+import type { AuthConfig, User } from "@auth/core/types"
 import { NuxtAuthHandler } from "#auth"
-import type { User } from '@auth/core/types';
+import { createClient } from '@supabase/supabase-js'
 
 const runtimeConfig = useRuntimeConfig()
-
-import { createClient } from '@supabase/supabase-js'
 
 async function getUser(username: string, password: string) {
   const supabaseClient = createClient(runtimeConfig.supaBaseUrl, runtimeConfig.supaBaseKey)

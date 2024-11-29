@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 // Create a single supabase client for interacting with the database
 const supabase = createClient(config.supaBaseUrl, config.supaBaseKey)
 
-async function createPhrase(name: String, type: string, origin: string, meanings: Object) {
+async function createPhrase(name: string, type: string, origin: string, meanings: object) {
   const { data } = await supabase
     .from('phrase')
     .insert([
@@ -15,7 +15,7 @@ async function createPhrase(name: String, type: string, origin: string, meanings
     return data
   }
 
-async function searchPhrase(name: String) {
+async function searchPhrase(name: string) {
   const { data: phrase } = await supabase
   .from('phrase')
   .select("name")
@@ -26,7 +26,7 @@ async function searchPhrase(name: String) {
   return phrase
 }
 
-async function searchExactPhrase(name: String) {
+async function searchExactPhrase(name: string) {
   const { data: phrase } = await supabase
     .from('phrase')
     .select("id, name, type, origin, meanings")
@@ -36,7 +36,7 @@ async function searchExactPhrase(name: String) {
   return phrase
 }
 
-async function updatePhrase(id: String, name:String, type: string, origin: string, meanings:Object) {
+async function updatePhrase(id: string, name:string, type: string, origin: string, meanings:object) {
   const { error } = await supabase
     .from('phrase')
     .update({ name: name, type: type, origin: origin, meanings: meanings })
@@ -45,7 +45,7 @@ async function updatePhrase(id: String, name:String, type: string, origin: strin
   return error
 }
 
-async function searchAllPhrases(phraseType: string, name: String) {
+async function searchAllPhrases(phraseType: string, name: string) {
   let type = 0
   if (phraseType == 'idioms') type = 1
 
@@ -59,7 +59,7 @@ async function searchAllPhrases(phraseType: string, name: String) {
   return phrase
 }
 
-async function searchPhrasesFromTo(phraseType:string,  alphabet: String, from: String, to: String) {
+async function searchPhrasesFromTo(phraseType:string,  alphabet: string, from: string, to: string) {
   let type = 0
   if (phraseType == 'idioms') type = 1
 

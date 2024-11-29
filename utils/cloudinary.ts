@@ -1,4 +1,4 @@
-export const uploadFile = async (file: any, type: string) => {
+export const uploadFile = async (file: File, type: string) => {
   const config = useRuntimeConfig()
   const data = new FormData()
   data.append("file", file)
