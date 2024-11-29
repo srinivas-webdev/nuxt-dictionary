@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { usePhraseStore } from '@/stores/phrase'
-
 definePageMeta({
   middleware: [
     function (to) {
-      if (import.meta.client) return
+      if (process.client) return
       const { session } = useAuth()
       const runtimeConfig = useRuntimeConfig()
 
@@ -17,7 +14,8 @@ definePageMeta({
   ]
 });
 
-
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
 const store = usePhraseStore()
 const { phraseDetails, editedPhraseId } = storeToRefs(store)
 //const phraseDetails = usePhraseDetails()

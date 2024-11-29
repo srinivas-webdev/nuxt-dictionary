@@ -4,7 +4,7 @@ const config = useRuntimeConfig()
 // Create a single supabase client for interacting with your database
 const supabase = createClient(config.supaBaseUrl, config.supaBaseKey)
 
-async function getUser(name: string, pwd: string) {
+async function getUser(name: String, pwd: String) {
   const { data } = await supabase
   .from('user')
   .select("id, name, secret")

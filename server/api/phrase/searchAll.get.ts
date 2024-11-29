@@ -1,17 +1,12 @@
-type SarchAllQueryObject = {
-  phraseType: string,
-  word: string
-}
-
 export default defineEventHandler(async (event) => {
-  const query: SarchAllQueryObject = getQuery(event)
+  const query: any = getQuery(event)
   const res = await searchAllPhrases(query.phraseType, query.word)
   const phrases = res?.map(phrase => phrase.name)
   
   // divide the phrases into groups of 10 
   // and get first and last phrases in each group
   const groupSize = 10
-  let groupedPhrases: Array<Array<string>> = []
+  let groupedPhrases: any = []
   if (phrases) {
     groupedPhrases = new Array(Math.floor(phrases.length / groupSize))
     

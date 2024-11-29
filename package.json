@@ -8,19 +8,20 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "lint": "eslint .",
+    "lint": "eslint --ext .ts,.js,.vue .",
     "prepare": "husky install"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@nuxt/eslint": "latest",
+    "@nuxt/eslint-config": "^0.2.0",
+    "@nuxtjs/eslint-module": "^4.1.0",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@vite-pwa/nuxt": "^0.4.0",
-    "eslint": "^9.14.0",
+    "eslint": "^8.54.0",
     "husky": "^8.0.0",
     "nuxt": "latest",
-    "vue": "^3.5.12",
-    "vue-router": "^4.4.5"
+    "vue": "^3.4.3",
+    "vue-router": "^4.2.5"
   },
   "dependencies": {
     "@auth/core": "^0.17.0",

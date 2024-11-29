@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const {phrase: phrase} : {phrase: string} = getQuery(event)
-  const res = searchPhrase(phrase)
+  const query: any = getQuery(event)
+  const res = searchPhrase(query.phrase)
   return res
 })

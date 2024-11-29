@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { storeToRefs } from 'pinia'
-import { usePhraseStore } from '@/stores/phrase'
 
 const colors = [
   'rgb(30, 50, 100)', 'rgb(0, 100, 80)',
@@ -10,6 +8,8 @@ const colors = [
   'rgb(20, 138, 8)', 'rgb(235, 30, 50)'
 ]
 
+import { storeToRefs } from 'pinia'
+import { usePhraseStore } from '@/stores/phrase'
 const store = usePhraseStore()
 const { phraseDetails } = storeToRefs(store)
 //const phraseDetails = usePhraseDetails()
