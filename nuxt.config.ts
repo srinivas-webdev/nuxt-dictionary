@@ -72,7 +72,10 @@ export default defineNuxtConfig({
         },
       ],
     },
-    workbox: {
+    injectManifest: {
+      injectionPoint: undefined,
+    },
+     workbox: {
       globPatterns: ['**/*.{js,css,html,png,svg,ico}'],
       runtimeCaching: [
         {

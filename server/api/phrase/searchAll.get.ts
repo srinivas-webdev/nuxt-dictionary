@@ -1,3 +1,5 @@
+import { searchAllPhrases } from "~/server/utils/phrase"
+
 export default defineEventHandler(async (event) => {
   const query: any = getQuery(event)
   const res = await searchAllPhrases(query.phraseType, query.word)
