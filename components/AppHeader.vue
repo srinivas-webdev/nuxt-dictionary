@@ -76,8 +76,9 @@ function onClickSearchInput() {
 }
 
 function onKeyEnterSearchInput() {
-  const element: HTMLElement | null = document?.querySelector('#search-query-button')
-  element?.click()
+  if (searchInputText.value?.length) {
+    window.location.href = `/dictionary?search=${searchInputText.value}`;
+  }
 }
 
 function onClick(e: MouseEvent) {
