@@ -1,4 +1,4 @@
-import { searchExactPhrase } from "~/server/utils/phrase";
+import { searchExactPhrase } from "~~/server/utils/phrase";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event)

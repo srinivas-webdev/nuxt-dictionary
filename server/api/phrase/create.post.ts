@@ -1,4 +1,4 @@
-import { createPhrase } from "~/server/utils/phrase"
+import { createPhrase } from "~~/server/utils/phrase"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)

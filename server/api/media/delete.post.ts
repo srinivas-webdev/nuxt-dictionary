@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   return res
 })
 
-const generateSHA1 =(data: any) => {
+const generateSHA1 =(data: string) => {
   const hash = crypto.createHash("sha1");
   hash.update(data);
   return hash.digest("hex");

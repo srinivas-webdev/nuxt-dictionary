@@ -1,24 +1,37 @@
-import { searchAllPhrases } from "~/server/utils/phrase"
+import { searchAllPhrases } from "~~/server/utils/phrase"
 
 export default defineEventHandler(async (event) => {
-  const query: any = getQuery(event)
-  const res = await searchAllPhrases(query.phraseType, query.word)
-  const phrases = res?.map(phrase => phrase.name)
+  const query: {phraseType: string, word: string} = getQuery(event);
+  const res: {name: unknown}[] | null = await searchAllPhrases(query.phraseType, query.word);
   
   // divide the phrases into groups of 10 
   // and get first and last phrases in each group
-  const groupSize = 10
-  let groupedPhrases: any = []
-  if (phrases) {
-    groupedPhrases = new Array(Math.floor(phrases.length / groupSize))
+  const groupSize = 10;
+  let groupedPhrases: [string, string][] = [];
+  if (res) {
+    const phrases: string[] = [];
+    res.forEach(phrase => {
+      if (typeof phrase.name === 'string') {
+        phrases.push(phrase.name);
+      }
+    });
+    if (phrases.length) {
+      groupedPhrases = new Array(Math.floor(phrases.length / groupSize))
     
-    for (let i = 0; i < groupedPhrases.length; i++) {
-      groupedPhrases[i] = [phrases[i*groupSize], phrases[((i+1)*groupSize)-1]]
-    }
-    if(phrases.length > (groupedPhrases.length)*groupSize) {
-      groupedPhrases.push([phrases[(groupedPhrases.length)*groupSize], phrases.at(-1)])
+      for (let i = 0; i < groupedPhrases.length; i++) {
+        const first = phrases[i*groupSize];
+        const last = phrases[((i+1)*groupSize)-1];
+        if (first && last)
+          groupedPhrases[i] = [first, last];
+      }
+      if(phrases.length > (groupedPhrases.length)*groupSize) {
+        const first = phrases[(groupedPhrases.length)*groupSize];
+        const last = phrases[phrases.length-1];
+        if (first && last)
+          groupedPhrases.push([first, last])
+      }
     }
   }
-  
-  return groupedPhrases
+
+  return groupedPhrases;
 })

@@ -1,19 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-
   modules: [
-    "@nuxtjs/eslint-module",
-    "@nuxtjs/tailwindcss",
-    "@hebilicious/authjs-nuxt",
-    "@pinia/nuxt",
-    '@vite-pwa/nuxt',
+    '@nuxt/eslint', 
+    '@nuxtjs/tailwindcss', 
+    "@pinia/nuxt", 
+    '@vite-pwa/nuxt'
   ],
-
-  eslint: {
-    lintOnStart: false
-  },
-
+  
   runtimeConfig: {
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
@@ -112,6 +107,7 @@ export default defineNuxtConfig({
       installPrompt: true,
     },
   },
-
-  compatibilityDate: '2024-10-28'
+  typescript: {
+    typeCheck: true,
+  },
 })

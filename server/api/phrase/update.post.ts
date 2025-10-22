@@ -1,4 +1,4 @@
-import { updatePhrase } from "~/server/utils/phrase"
+import { updatePhrase } from "~~/server/utils/phrase"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
