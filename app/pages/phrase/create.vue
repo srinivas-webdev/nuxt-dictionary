@@ -52,7 +52,7 @@ async function onConfirm() {
        } 
     })
   }
-  navigateTo('/admin')
+  //navigateTo('/admin')
 }
 </script>
 
