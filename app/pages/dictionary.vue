@@ -27,6 +27,23 @@ const route = useRoute()
 const searchText = route.query['search']
 const {data: phraseData} = await useFetch<PhraseDetails>(`/api/phrase/exactSearch?phrase=${searchText}`)
 
+const extraDetails = getExtraDetails(phraseData.value);
+
+function getExtraDetails(phraseData: PhraseDetails | undefined) {
+  if (phraseData == undefined || phraseData?.extraDetails?.length == 0) {
+    return []
+  }
+  if (phraseData?.extraDetails == undefined && phraseData?.origin?.length) {
+    const extraInfo = [["Origin", [phraseData.origin]]]
+    return extraInfo;
+  } 
+  if (phraseData?.extraDetails && phraseData?.extraDetails.length > 0) {
+    return phraseData?.extraDetails
+  }
+  return []
+}
+
+
 const onClickUpdate = () => {
   if (phraseData.value) {
     phraseDetails.value = phraseData.value
@@ -35,10 +52,23 @@ const onClickUpdate = () => {
   }
 }
 
+watch(showWordOrigin, async (newShowOrigin) => {
+  if (newShowOrigin === true) {
+    gsap.to(".hand-icon", {
+      duration: 0.5,
+      rotate: 0,
+      ease: 'elastic.Out(2, 1)',
+    })
+  } else {
+    gsap.to(".hand-icon", {
+    rotate: -90,
+  })
+  }
+})
+
 const onBeforeEnter = (el: Element) => {
   gsap.set(el, {
     opacity: 0,
-    xPercent: 10
   })
   gsap.set(".hand-icon", {
     rotate: -90,
@@ -46,17 +76,12 @@ const onBeforeEnter = (el: Element) => {
 }
 
 const onEnter = (el: Element, done: () => void) => {
+  const gsapEl = el as HTMLElement;
+  
   gsap.to(el, {
-    duration: 0.5,
     opacity: 1,
-    xPercent: 0,
-    ease: 'elastic.Out(2, 1)',
+    delay: Number(gsapEl.dataset.index) * 0.5,
     onComplete: done
-  })
-  gsap.to(".hand-icon", {
-    duration: 0.5,
-    rotate: 0,
-    ease: 'elastic.Out(2, 1)',
   })
 }
 
@@ -64,14 +89,8 @@ const onLeave = (el: Element, done: () => void) => {
   gsap.to(el, {
     duration: 0.5,
     opacity: 0,
-    xPercent: 10,
     ease: 'elastic.Out(2, 1)',
     onComplete: done
-  })
-  gsap.to(".hand-icon", {
-    duration: 0.5,
-    rotate: -90,
-    ease: 'elastic.Out(2, 1)',
   })
 }
 
@@ -81,6 +100,17 @@ const baseColors = [
   'green', 'crimson', 'DarkSlateGray', 'maroon'
 ]
 let initBaseColor: string | undefined = '';
+
+const addlInfoColors = [
+  `linear-gradient(90deg, #fff957, #fdce68)`, 
+  `linear-gradient(90deg, #f2fff0, #b8e0b1)`,
+  `linear-gradient(90deg, #fdfdfd, #a8d0e6)`,
+  `linear-gradient(270deg, #cfb6f7, #e5f3ff)`,
+  `linear-gradient(
+    to bottom left in oklab,
+    oklch(55% .45 350) 0%,
+    oklch(95% .4 95)   100%`, 'oklch(84.5% 0.143 164.978)',
+]
 
 const getRandomBaseColor = (index: number) => {
   if (index === 0) {
@@ -148,7 +178,7 @@ const getColorOffset = (total: number, index: number) => {
           </p>
         </section>
         <section 
-          v-if="phraseData?.origin" 
+          v-if="phraseData?.origin || phraseData?.extraDetails" 
           class="flex flex-col gap-2 bg-teal-100 rounded-xl" 
         >
           <section 
@@ -162,23 +192,37 @@ const getColorOffset = (total: number, index: number) => {
               class="hand-icon w-8 h-8"
             >
             <section class="text-xl text-orange-600 font-bold">
-              Word Origin
+              Additionl Information
             </section>
           </section>
           
-          <Transition 
+          <TransitionGroup
+            v-if="showWordOrigin"
             appear
+            tag="ul"
+            :css="false"
             @before-enter="onBeforeEnter"
             @enter="onEnter"
             @leave="onLeave"
+            
           >
-            <p 
-              v-if="showWordOrigin" 
-              class="italic text-lg font-semibold rounded-xl p-2 m-2 shadow-2xl bg-teal-50"
+            <li 
+              v-for="(item, index) in extraDetails"
+              :key="index"
+              :data-index="index"
+              class="italic text-lg font-semibold rounded-xl p-2 ml-2  mb-4 shadow-2xl "
+              :style="{ 'background': `${addlInfoColors[index]}`}"
             >
-              {{ phraseData.origin }}
-            </p>
-          </Transition>
+              <p><strong class="font-bold text-xl text-blue-600">{{item[0]}} </strong></p>
+              <ul 
+                v-for="(detail, detailIndex) in item[1]"
+                :key="detailIndex"
+                class="list-disc list-outside"
+              >
+                <li class="ml-4 p-2">{{ detail }}</li>
+              </ul>
+            </li>
+          </TransitionGroup>
         </section>
         
         <MediaContainer :media-list="meaning.media" />

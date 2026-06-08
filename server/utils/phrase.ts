@@ -4,11 +4,11 @@ const config = useRuntimeConfig()
 // Create a single supabase client for interacting with the database
 const supabase = createClient(config.supaBaseUrl, config.supaBaseKey)
 
-async function createPhrase(name: string, type: string, origin: string, meanings: object) {
+async function createPhrase(name: string, type: string, origin: string, extraDetails: object, meanings: object) {
   const { data } = await supabase
     .from('phrase')
     .insert([
-      { name: name, type: type, origin: origin, meanings: meanings },
+      { name: name, type: type, origin: origin, extraDetails: extraDetails, meanings: meanings },
     ])
     .select()
 
@@ -29,17 +29,17 @@ async function searchPhrase(name: string) {
 async function searchExactPhrase(name: string) {
   const { data: phrase } = await supabase
     .from('phrase')
-    .select("id, name, type, origin, meanings")
+    .select("id, name, type, origin, extraDetails, meanings")
     .eq('name', name)
     .single()
 
   return phrase
 }
 
-async function updatePhrase(id: string, name:string, type: string, origin: string, meanings: object) {
+async function updatePhrase(id: string, name:string, type: string, origin: string, extraDetails: object, meanings: object) {
   const { error } = await supabase
     .from('phrase')
-    .update({ name: name, type: type, origin: origin, meanings: meanings })
+    .update({ name: name, type: type, origin: origin, extraDetails: extraDetails, meanings: meanings })
     .eq('id', id)
 
   return error

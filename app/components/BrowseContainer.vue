@@ -22,6 +22,7 @@ const alphabets: string[] = [...Array(26)].map((_, y) => String.fromCharCode(y +
 const onClickAlphabet = (alphabet: string) => {
   let phraseType = 'phrasal-verbs'
   if (props.phraseType == 'Idioms') phraseType = 'idioms'
+  if (props.phraseType == 'phrases') phraseType = 'phrases'
   navigateTo(`/browse/${phraseType}/${alphabet}`)
 }
 </script>

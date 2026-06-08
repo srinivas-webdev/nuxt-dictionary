@@ -15,6 +15,7 @@ const phraseType = ref<PhraseType>(0)
 const idiomOrigin = ref("")
 const meanings = ref<Meaning[]>([])
 const toBeUpdated = ref(false);
+const extraDetails = ref<[string, string[]][]>([]);
 
 onMounted(() => {
   const phrase = phraseDetails?.value
@@ -26,6 +27,8 @@ onMounted(() => {
       phraseType.value = phrase.type
     if (phrase.origin)
       idiomOrigin.value = phrase.origin
+    if (phrase.extraDetails) 
+      extraDetails.value = phrase.extraDetails
   }
 })
 
@@ -38,6 +41,7 @@ async function onConfirm() {
         name: phraseName.value.trim(),
         type: phraseType.value,
         origin: idiomOrigin.value.trim(),
+        extraDetails: extraDetails.value,
         meanings: meanings.value
        } 
     })
@@ -48,11 +52,48 @@ async function onConfirm() {
         name: phraseName.value.trim(),
         type: phraseType.value,
         origin: idiomOrigin.value.trim(),
+        extraDetails: extraDetails.value,
         meanings: phraseDetails.value?.meanings
        } 
     })
   }
   //navigateTo('/admin')
+ }
+
+  const addExtraDetailsButtonStyle = `my-1 px-1 bg-sky-600 
+  text-white rounded-md font-md border-2 border-sky-600 
+  hover:outline hover:outline-offset-1 hover:outline-sky-600`
+
+  
+  function onClickAddExtraDetails() {
+    extraDetails.value.push(["", []])
+  }
+
+function updateExtraDetailsTitle(newTitle: string, index: number) {
+  if (extraDetails.value[index]) 
+    extraDetails.value[index][0] = newTitle;
+}
+
+function addExtraDetailsText(index: number) {
+  if (extraDetails.value[index]) {
+    const textArr = extraDetails.value[index][1];
+    textArr.push('')
+  }
+}
+
+function updateExtraDetailsText(titleIndex: number, textIndex: number, text: string) {
+  if (extraDetails.value[titleIndex]) {
+    extraDetails.value[titleIndex][1][textIndex] = text;
+  }   
+}
+
+function deleteExtraDetailsText(titleIndex: number, textIndex: number) {
+  if (extraDetails.value[titleIndex]) {
+    extraDetails.value[titleIndex][1].splice(textIndex, 1)
+    if (extraDetails.value[titleIndex][1].length === 0) {
+      extraDetails.value.splice(titleIndex, 1);
+    }
+  }   
 }
 </script>
 
@@ -179,6 +220,30 @@ async function onConfirm() {
           Origin
         </label>
       </section>
+      <fieldset class="relative m-2 p-2 rounded-md bg-teal-300">
+        <legend class="text-lg font-semibold bg-yellow-400 px-4 rounded-md">
+          Additional Info
+          <ButtonContainer 
+            name="Add Details" 
+            class="ml-8"
+            :custom-style="addExtraDetailsButtonStyle"
+            @click-event="onClickAddExtraDetails" 
+          />
+        </legend>
+        <ul>
+          <ExtraDetails
+            v-for="(details, index) in extraDetails"
+            :key="index"
+            :index="index"
+            :title="details[0]"
+            :details="details[1]"
+            @update-extra-details-title="(newTitle) => updateExtraDetailsTitle(newTitle, index)"
+            @add-extra-details-text="addExtraDetailsText"
+            @update-extra-details-text="updateExtraDetailsText"
+            @delete-extra-details-text="deleteExtraDetailsText"
+          />
+        </ul>
+      </fieldset>
       <PhraseMeanings />
     </form>
   </main>
