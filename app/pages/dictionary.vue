@@ -213,13 +213,13 @@ const getColorOffset = (total: number, index: number) => {
               class="italic text-lg font-semibold rounded-xl p-2 ml-2  mb-4 shadow-2xl "
               :style="{ 'background': `${addlInfoColors[index]}`}"
             >
-              <p><strong class="font-bold text-xl text-blue-600">{{item[0]}} </strong></p>
+              <p class="mb-2"><strong class="font-bold text-xl text-blue-600">{{item[0]}} </strong></p>
               <ul 
                 v-for="(detail, detailIndex) in item[1]"
                 :key="detailIndex"
                 class="list-disc list-outside"
               >
-                <li class="ml-4 p-2">{{ detail }}</li>
+                <li class="ml-4">{{ detail }}</li>
               </ul>
             </li>
           </TransitionGroup>
