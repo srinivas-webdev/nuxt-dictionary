@@ -123,6 +123,16 @@ const getColorOffset = (total: number, index: number) => {
   const middleIndex = Math.floor(total/2-1)
   return (middleIndex - index) * 0.05
 }
+
+function getPhraseType(phraseType: number | undefined) {
+  if (phraseType === 0) {
+    return "Phrasal Verb"
+  } else if (phraseType === 1) {
+    return "Idiom"
+  } else {
+    return "Phrase"
+  }
+}
 </script>
 
 <template>
@@ -134,7 +144,7 @@ const getColorOffset = (total: number, index: number) => {
           {{ searchText }}
         </span>
         <span class="pl-2 font-extrabold text-xl text-orange-500">
-          {{ phraseData?.type == 1 ? '(Idiom)' : '(Phrasal Verb)' }}
+          {{`(${getPhraseType(phraseData?.type)})`}}
         </span>
         in English
       </p>

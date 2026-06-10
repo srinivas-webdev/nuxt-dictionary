@@ -194,6 +194,22 @@ function deleteExtraDetailsText(titleIndex: number, textIndex: number) {
                 Idiom 
               </label>
             </li>
+            <li class="flex gap-2 items-center text-md font-semibold p-2 hover:bg-gray-100 rounded-md border-solid border-purple-500 border-2">
+              <input 
+                id="phrase" 
+                v-model="phraseType"
+                type="radio" 
+                value="2" 
+                class="peer/phrase"
+                :checked="phraseType == 2"
+              >
+              <label 
+                for="phrase" 
+                class="text-gray-900 peer-checked/idiom:text-orange-600"
+              >
+                Phrase 
+              </label>
+            </li>
           </ul>
         </fieldset>
       </section>
